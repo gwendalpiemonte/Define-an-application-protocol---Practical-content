@@ -104,5 +104,5 @@ Le serveur doit traiter cela comme une erreur et en informer l'expéditeur.
 
 ### Diagramme de séquence
 
-<img src="/Diagramme.PNG" width="700"/>
+<img src="https://github.com/gwendalpiemonte/Define-an-application-protocol-Practical-content/blob/main/Diagramme.png" width="300"/>
 
