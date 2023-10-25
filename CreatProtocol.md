@@ -32,17 +32,19 @@ Il vous est demandé de définir le protocole applicatif qui sera utilisé par l
 
 Gardez à l’esprit les points suivants :
 
-     - Quel est le but du protocole ?
-     - Sur quel(s) port(s) le protocole fonctionne-t-il ?
-     - Sur quel(s) protocole(s) le protocole fonctionne-t-il ?
-     - Qui initie la connexion ?
-     - Quels sont les messages/actions disponibles ?
-     - Quel est le format des messages/actions ?
-     - Existe-t-il des cas limites ou des cas d'erreur ? Que se passe-t-il dans ces cas ?
+- Quel est le but du protocole ?
+- Sur quel(s) port(s) le protocole fonctionne-t-il ?
+- Sur quel(s) protocole(s) le protocole fonctionne-t-il ?
+- Qui initie la connexion ?
+- Quels sont les messages/actions disponibles ?
+- Quel est le format des messages/actions ?
+ - Existe-t-il des cas limites ou des cas d'erreur ? Que se passe-t-il dans ces cas ?
 
 ## Reponse à l'exercice
 
 ### Quel est le but du protocole ?
+Le but de ce protocole est d'échanger des messages texte entre utilisateurs avec une architecture client-serveur.
+Il permet aux utilisateurs de se connecter à un serveur et d'envoyer des messages texte à d'autres utilisateurs connectés et de recevoir des messages d'autres utilisateurs.
 
 ### Sur quel(s) port(s) le protocole fonctionne-t-il ?
 Le protocole utilise le port 1234.
@@ -51,14 +53,56 @@ Le protocole utilise le port 1234.
 Le protocole utilise le protocole TCP (Transmission Control Protocol)
 
 ### Qui initie la connexion ?
-Les clients (ici les gens de l'entreprise) 
-
+Les clients (ici les gens de l'entreprise) initie la connexion TCP en se connectant au serveur par le port 1234.
 
 ### Quels sont les messages/actions disponibles ?
+Connexion au serveur   : les clients établissent une connexion au serveur.
+Envoyer un message     : les utilisateurs connectés peuvent envoyer des messages à d'autres utilisateurs connectés.
+Recevoir un message    : les utilisateurs peuvent recevoir des messages qui leur sont envoyés.
+Deconnexion au serveur : les clients finissent la connexion au serveur.
 
 ### Quel est le format des messages/actions ?
+Demande de connexion:
+- Format :  `CONNECT <username>`
+
+Réponse à la demande de connexion:
+- Acceptée
+  - Format : `ACCEPTED`
+
+- Refusée
+  - Format : `REFUSED <error>`
+
+Envoyer un message:
+- Format :  `SEND <contact_username> <message>`
+
+Réponse à l'envoie du message:
+- Acceptée
+  - Format : `DELIVERED <contact_username>`
+
+- Refusée
+  - Format : `UNDELIVERED  <error>`
+
+Deconnexion:
+- Format :  `DISCONNECT`
+
+Réponse à la deconnexion:
+- Format :  `DISCONNECTED` 
 
 ### Existe-t-il des cas limites ou des cas d'erreur ? Que se passe-t-il dans ces cas ?
+Connexion refusée: 
+Si le serveur a atteint sa limite de 5 connexions en même temps.
+Le serveur va refuser toute tentative de connexion  jusqu'à ce qu'un emplacement soit disponible. 
+Si le serveur est plein le client qui essaie de se connecter va être informé que le serveur est plein.
 
+Limite de longueur du message: 
+Si un utilisateur envoie un message plus grand que la limite fixée (100 caractères).   
+le serveur ne va pas accepter le message et en informer l'expéditeur.
 
+Utilisateur ou destinataire inéxistant: 
+Si un client essaie d'envoyer un message à un utilisateur qui n'est pas connecté ou si le nom du destinataire n'est pas reconnu.
+Le serveur doit traiter cela comme une erreur et en informer l'expéditeur.
+
+### Diagramme de séquence
+
+<img src="/Diagramme.PNG" width="700"/>
 
